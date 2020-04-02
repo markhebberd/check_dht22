@@ -152,7 +152,7 @@ static int querySensor(int GPIO, uint8_t results[4]) {
 	digitalWrite(GPIO, LOW);
 	delay(10);
 
-	// And then a HIGH state for 40ìs
+	// And then a HIGH state for 40Ã¬s
 	digitalWrite(GPIO, HIGH);
 	delayMicroseconds(40);
 
@@ -190,10 +190,10 @@ static int querySensor(int GPIO, uint8_t results[4]) {
 	setDefaultPriority();
 
 	// The time it should take to complete the operation should be:
-	//	10ms + 40µs - for sensor to reset
-	//	+ 80µs + 80µs - for the sensor to transition from a LOW to a HIGH state
-	//	+ 40 * ( 50µs + 27µs [0] or 70µs [1] ) - for the data to be retrieved from the sensor
-	//	= 15010µs in total
+	//	10ms + 40Âµs - for sensor to reset
+	//	+ 80Âµs + 80Âµs - for the sensor to transition from a LOW to a HIGH state
+	//	+ 40 * ( 50Âµs + 27Âµs [0] or 70Âµs [1] ) - for the data to be retrieved from the sensor
+	//	= 15010Âµs in total
 	// If it took more than that, there has been a scheduling
 	// interruption and the reading is probably invalid
 	if ((took.tv_sec!=0) || (took.tv_usec>16000)) {
@@ -228,8 +228,8 @@ struct sensorOutput parseSensorOutput(int GPIO) {
 		// If the sensor query was successful
 		if (querySensor(GPIO, sensorData)) {
 			// Parse the temperature and humidity data
-			result.temperature=(sensorData[2]*256+sensorData[3])/10;
-			result.humidity=(sensorData[0]*256+sensorData[1])/10;
+			result.temperature=(sensorData[2]*256+sensorData[3])/10.0;
+			result.humidity=(sensorData[0]*256+sensorData[1])/10.0;
 
 			// Check and adjust for negative temperatures
 			if ((sensorData[2]&0x80)!=0) {
